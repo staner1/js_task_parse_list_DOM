@@ -1,17 +1,17 @@
 'use strict';
 
-const dataSalaryes = document.querySelectorAll('[data-salary]');
 const ul = document.querySelector('ul');
 
+const toNumber = (string) => {
+  let result = '';
+
+  result = string.replaceAll('$', '').replaceAll(',', '');
+
+  return +result;
+};
+
 function sortList(list) {
-  const arrayDatas = Array.from(list);
-  const toNumber = (string) => {
-    let result = '';
-
-    result = string.replaceAll('$', '').replaceAll(',', '');
-
-    return +result;
-  };
+  const arrayDatas = Array.from(list.children);
 
   arrayDatas.sort((firstLi, secondLi) => {
     const salaryFirst = toNumber(firstLi.getAttribute('data-salary'));
@@ -20,7 +20,7 @@ function sortList(list) {
     return salarySecond - salaryFirst;
   });
 
-  return ul.append(...arrayDatas);
+  ul.append(...arrayDatas);
 }
 
 function getEmployees(list) {
@@ -31,9 +31,9 @@ function getEmployees(list) {
   for (const li of childrens) {
     const person = {};
 
-    person.name = li.innerText;
+    person.name = li.textContent.trim();
     person.position = li.getAttribute('data-position');
-    person.salary = li.getAttribute('data-salary');
+    person.salary = toNumber(li.getAttribute('data-salary'));
     person.age = li.getAttribute('data-age');
 
     result.push(person);
@@ -42,5 +42,5 @@ function getEmployees(list) {
   return result;
 }
 
-sortList(dataSalaryes);
+sortList(ul);
 getEmployees(ul);
