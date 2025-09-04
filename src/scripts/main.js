@@ -20,7 +20,7 @@ function sortList(list) {
     return salarySecond - salaryFirst;
   });
 
-  ul.append(...arrayDatas);
+  list.append(...arrayDatas);
 }
 
 function getEmployees(list) {
@@ -34,7 +34,7 @@ function getEmployees(list) {
     person.name = li.textContent.trim();
     person.position = li.getAttribute('data-position');
     person.salary = toNumber(li.getAttribute('data-salary'));
-    person.age = li.getAttribute('data-age');
+    person.age = +li.getAttribute('data-age');
 
     result.push(person);
   }
